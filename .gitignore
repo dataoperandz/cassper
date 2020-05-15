@@ -1,0 +1,8 @@
+target/
+project/target/
+project/project/
+.history
+.cache
+*.DS_Store
+.idea/
+.idea_modules/
