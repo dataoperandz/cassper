@@ -1,8 +1,8 @@
 package com.cassper
 
 import akka.event.slf4j.SLF4JLogging
-import com.cassper.Demo.cassandraDocumentsTable
 import com.cassper.client.{CassperClient, DefaultCassperClient}
+import com.cassper.config.CassandraConf
 import com.cassper.exception.{CassperErrorCodeEnum, CassperException}
 import com.cassper.handler.CassalogHandler
 import com.cassper.handler.cassandra.search.DefaultSearchHandler
@@ -22,7 +22,7 @@ object Cassper extends Cassper {
 
 }
 
-class Cassper extends SLF4JLogging {
+class Cassper extends CassandraConf with SLF4JLogging {
 
   lazy val fileHandler = new DefaultFileHandler
   lazy val storeHandler = new DefaultStoreHandler

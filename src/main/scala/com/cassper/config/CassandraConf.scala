@@ -1,4 +1,4 @@
-package com.cassper.Config
+package com.cassper.config
 
 import com.typesafe.config.ConfigFactory
 
@@ -11,5 +11,5 @@ import com.typesafe.config.ConfigFactory
 trait CassandraConf {
   val cassandraConf = ConfigFactory.load("schema.conf")
   lazy val cassandraKeyspace = cassandraConf.getString("schema.createKeyspace")
-  lazy val cassandraDocumentsTable = cassandraConf.getString("schema.createTableDocuments")
+  lazy val cassandraDocumentsTable = cassandraConf.getString("schema.createTableSchemaVersion")
 }

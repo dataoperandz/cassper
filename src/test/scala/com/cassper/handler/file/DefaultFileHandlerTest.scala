@@ -74,9 +74,9 @@ class DefaultFileHandlerTest extends FlatSpec with Matchers {
     fileNames should equal("cql")
   }
 
-  "Validate version" should "by giving expected file format" in{
+ /* "Validate version" should "by giving expected file format" in{
     val fileHandler = new DefaultFileHandler
     val bool = fileHandler.validateVersion("V_1_2_initi.cql")
     println(bool)
-  }
+  }*/
 }

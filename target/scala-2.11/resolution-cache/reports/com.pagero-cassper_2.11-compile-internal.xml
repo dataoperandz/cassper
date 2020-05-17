@@ -7,7 +7,7 @@
 		revision="0.1"
 		conf="compile-internal"
 		confs="compile, runtime, test, provided, optional, compile-internal, runtime-internal, test-internal, plugin, pom, scala-tool"
-		date="20200515194045"/>
+		date="20200517141025"/>
 	<dependencies>
 		<module organisation="com.typesafe.akka" name="akka-slf4j_2.11">
 			<revision name="2.5.19" status="release" pubdate="20181207171409" resolver="sbt-chain" artresolver="sbt-chain" homepage="http://akka.io/" extra-info.apiURL="http://doc.akka.io/api/akka/2.5.19" downloaded="false" searched="false" default="false" conf="default, compile, runtime, default(compile), master" position="27">

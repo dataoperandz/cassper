@@ -11,7 +11,7 @@ import com.datastax.driver.core.Session
 
 class DefaultCassperClient(session: Session, cassalogHandler: CassalogHandler) extends CassperClient {
 
-  override def migrate(session: Session): Unit = {
-    cassalogHandler.runScript()
+  override def migrate(keyspace:String, session: Session): Unit = {
+    cassalogHandler.runScript(keyspace)
   }
 }

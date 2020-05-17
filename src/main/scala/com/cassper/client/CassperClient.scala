@@ -10,5 +10,5 @@ import com.datastax.driver.core.Session
 
 trait CassperClient {
 
-  def migrate(session: Session): Unit
+  def migrate(keyspace:String, session: Session): Unit
 }

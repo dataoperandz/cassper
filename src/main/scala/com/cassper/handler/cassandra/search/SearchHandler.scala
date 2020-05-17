@@ -9,5 +9,5 @@ import com.cassper.model.FileDetails
  */
 
 trait SearchHandler {
-  def search(): List[FileDetails]
+  def search(keyspace: String): List[FileDetails]
 }

@@ -19,7 +19,10 @@ class DefaultFileHandler extends FileHandler with SLF4JLogging {
   private val CASSPER_DIR = "cassper"
 
   override def getFiles: List[File] = {
+
+    //    val cassalogDirectory = scala.io.Source.fromFile(getClass.getClassLoader.getResource(CASSPER_DIR).getFile, "iso-8859-1")
     val cassalogDirectory = getClass.getClassLoader.getResource(CASSPER_DIR)
+
     if (cassalogDirectory != null) {
       val file = new File(cassalogDirectory.toURI)
       if (file.exists && file.isDirectory) {
@@ -35,6 +38,7 @@ class DefaultFileHandler extends FileHandler with SLF4JLogging {
   override def getFilesName: List[FileDetails] = {
     val cassalogDirectory = getClass.getClassLoader.getResource(CASSPER_DIR)
     val path = cassalogDirectory.getPath + SUFFIX
+    println(cassalogDirectory.toURI)
     val file = new File(cassalogDirectory.toURI)
     if (file.exists && file.isDirectory) {
       file.list().map(fileName => {

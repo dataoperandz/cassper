@@ -15,11 +15,11 @@ import scala.util.Try
 
 class DefaultStoreHandler extends StoreHandler with CassandraCluster {
 
-  lazy val insertQuery = "insert into storage_document.cassalognew (id, installed_rank, description, type, script," +
+  lazy val insertQuery = "insert into <KEY_SPACE>.schema_version (id, installed_rank, description, type, script," +
     " checksum, installed_by, installed_on, execution_time, success) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
 
-  override def store(cassalog: CassperDetails): Unit = {
-    val prepared = session.prepare(insertQuery)
+  override def store(keyspace: String, cassalog: CassperDetails): Unit = {
+    val prepared = session.prepare(insertQuery.replace("<KEY_SPACE>", keyspace))
     val defaultZoneId = ZoneId.systemDefault
 
     //Converting the date to Instant

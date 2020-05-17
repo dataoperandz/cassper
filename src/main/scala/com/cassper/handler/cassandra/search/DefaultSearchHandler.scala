@@ -11,8 +11,8 @@ import com.datastax.driver.core.querybuilder.QueryBuilder
  */
 
 class DefaultSearchHandler extends SearchHandler with CassandraCluster {
-  override def search(): List[FileDetails] = {
-    val selectQuery = QueryBuilder.select.all.from("storage_document", "cassalognew")
+  override def search(keyspace: String): List[FileDetails] = {
+    val selectQuery = QueryBuilder.select.all.from(keyspace, "schema_version")
     val resultSet = session.execute(selectQuery)
     val it = resultSet.iterator();
     var executedScripts = List[FileDetails]()

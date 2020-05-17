@@ -1,14 +1,14 @@
+
 package com.cassper
 
 import java.io.File
 
-import com.cassper.Config.CassandraConf
+import com.cassper.config.CassandraConf
 import com.cassper.cassandra.CassandraCluster
 import com.cassper.handler.CassalogHandler
 import com.cassper.handler.cassandra.search.DefaultSearchHandler
 import com.cassper.handler.cassandra.store.DefaultStoreHandler
 import com.cassper.handler.file.DefaultFileHandler
-import com.cassper.handler.hashing.Generator
 
 /**
  * Load configurations define in application.conf from here
@@ -25,30 +25,30 @@ object Demo extends CassandraCluster with CassandraConf {
 
   def main(args: Array[String]): Unit = {
 
-    //    val fileStream = getClass.getResourceAsStream("/json-sample.js")
-    //    val lines = Source.fromInputStream(fileStream).getLines
-    //    lines.foreach(line => println(line))
-    //    getListOfFiles("")
-    val cassalogDirectory = getClass.getClassLoader.getResource("cassalog")
-    println(cassalogDirectory.getPath)
-    //val currentDirectory = new java.io.File(".").getCanonicalPath
-    //    storeHandler.store(Cassalog(1,1,"","","","","", "",null, 1, true))
-    session.execute(cassandraKeyspace)
-    session.execute(cassandraDocumentsTable)
+    session.execute(cassandraKeyspace.replace("<KEY_SPACE>", "cassper_keyspace"))
+    session.execute(cassandraDocumentsTable.replace("<KEY_SPACE>", "cassper_keyspace"))
+    cassalogHandler.runScript("cassper_keyspace")
     //    storeHandler.executeStatement("") match {
     //      case Success(unit) =>
     //        println("Success")
     //      case Failure(exception) =>
     //        println(exception)
     //    }
-    cassalogHandler.runScript()
-    val aa = Generator.generate("MD5", "/home/pramod/MyWork/cassalog/target/scala-2.11/classes/cassalog/V_1_1__intialization.cql")
-    println(aa)
+    //    val fileStream = getClass.getResourceAsStream("/json-sample.js")
+    //    val lines = Source.fromInputStream(fileStream).getLines
+    //    lines.foreach(line => println(line))
+    //    getListOfFiles("")
+    //    val cassalogDirectory = getClass.getClassLoader.getResource("cassalog")
+    //    println(cassalogDirectory.getPath)
+    //val currentDirectory = new java.io.File(".").getCanonicalPath
+    //    storeHandler.store(Cassalog(1,1,"","","","","", "",null, 1, true))
+    /*val aa = Generator.generate("MD5", "/home/pramod/MyWork/cassalog/target/scala-2.11/classes/cassalog/V_1_1__intialization.cql")
+    println(aa)*/
 
     //    val now = new Date()
     //    val simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ssZ")
     //    println(simpleDateFormat.format(now))
-    searchHandler.search()
+//    searchHandler.search()
   }
 
 
