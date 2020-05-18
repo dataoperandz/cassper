@@ -4,7 +4,7 @@
 		module="cassper-build"
 		revision="0.1.0-SNAPSHOT"
 		status="integration"
-		publication="20200516235323"
+		publication="20200518185005"
 		e:sbtVersion="1.0" e:scalaVersion="2.12"
 	>
 		<description>
