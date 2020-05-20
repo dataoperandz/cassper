@@ -1,7 +1,9 @@
 package com.cassper.handler.hashing
 
-import java.nio.file.{Files, Paths}
+import java.io.{BufferedReader, InputStreamReader}
 import java.security.MessageDigest
+
+import com.cassper.handler.file.scanner.JarFileClassPathLocationScanner
 
 /**
  * Load configurations define in application.conf from here
@@ -10,6 +12,7 @@ import java.security.MessageDigest
  */
 
 object Generator {
+  val scanner = new JarFileClassPathLocationScanner
 
   implicit class Helper(val sc: StringContext) extends AnyVal {
     def md5(): String = generate("MD5", sc.parts(0))
@@ -22,8 +25,11 @@ object Generator {
   // t is the type of checksum, i.e. MD5, or SHA-512 or whatever
   // path is the path to the file you want to get the hash of
   def generate(t: String, path: String): String = {
-    val arr = Files readAllBytes (Paths get path)
-    val checksum = MessageDigest.getInstance(t) digest arr
+    println(s"path -> $path")
+    val in = getClass.getResourceAsStream("/" + path)
+    val reader = new BufferedReader(new InputStreamReader(in))
+    val content = Stream.continually(reader.readLine()).takeWhile(_ != null).mkString("\n")
+    val checksum = MessageDigest.getInstance(t) digest content.getBytes
     checksum.map("%02X" format _).mkString
   }
 }

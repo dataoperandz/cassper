@@ -1,3 +1,4 @@
+/*
 package com.cassper
 
 import com.cassper.handler.CassalogHandler
@@ -15,3 +16,4 @@ class CassperDetailsHandlerTest extends FlatSpec with Matchers {
 //    cassalogHandler.RunScript()
   }
 }
+*/

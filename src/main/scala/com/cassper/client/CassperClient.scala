@@ -1,7 +1,5 @@
 package com.cassper.client
 
-import com.datastax.driver.core.Session
-
 /**
  * Load configurations define in application.conf from here
  *
@@ -10,5 +8,5 @@ import com.datastax.driver.core.Session
 
 trait CassperClient {
 
-  def migrate(keyspace:String, session: Session): Unit
+  def migrate(keyspace: String): Unit
 }

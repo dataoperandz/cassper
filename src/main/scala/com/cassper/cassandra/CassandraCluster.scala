@@ -1,3 +1,4 @@
+/*
 package com.cassper.cassandra
 
 import akka.event.slf4j.SLF4JLogging
@@ -25,4 +26,4 @@ val cassandraHosts = List("localhost")
   private def getSession(): Session = {
       cluster.connect()
   }
-}
+}*/

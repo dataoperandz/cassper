@@ -1,11 +1,15 @@
 package com.cassper.handler.file
 
-import java.io.File
+import java.io.{BufferedReader, InputStreamReader}
 
 import akka.event.slf4j.SLF4JLogging
 import com.cassper.exception.{CassperErrorCodeEnum, CassperException}
+import com.cassper.handler.file.scanner.ClassPathLocationScanner
 import com.cassper.handler.hashing.Generator
 import com.cassper.model.FileDetails
+import com.cassper.util.Constants
+
+import scala.util.Try
 
 /**
  * File related all the actions from here
@@ -13,41 +17,24 @@ import com.cassper.model.FileDetails
  * @author pramod shehan(pramodshehan@gmail.com)
  */
 
-class DefaultFileHandler extends FileHandler with SLF4JLogging {
+class DefaultFileHandler(scanner: ClassPathLocationScanner) extends FileHandler with SLF4JLogging {
 
-  private val SUFFIX = "/"
-  private val CASSPER_DIR = "cassper"
-
-  override def getFiles: List[File] = {
-
-    //    val cassalogDirectory = scala.io.Source.fromFile(getClass.getClassLoader.getResource(CASSPER_DIR).getFile, "iso-8859-1")
-    val cassalogDirectory = getClass.getClassLoader.getResource(CASSPER_DIR)
-
-    if (cassalogDirectory != null) {
-      val file = new File(cassalogDirectory.toURI)
-      if (file.exists && file.isDirectory) {
-        file.listFiles().toList
-      } else {
-        List[File]()
+  override def getFilesName: Try[List[FileDetails]] = {
+    Try {
+      val cassperDirectory = scanner.findResourceNames(Constants.CASSPER_DIR, getClass.getClassLoader.
+        getResource(Constants.CASSPER_DIR))
+      val value = cassperDirectory.iterator();
+      var fileDetails = List[FileDetails]()
+      while (value.hasNext) {
+        val fileName = value.next()
+        if (fileName.contains(".cql")) {
+          val details = FileDetails(getVersionFromName(fileName),
+            fileName, getDescription(fileName), getFileType(fileName),
+            Generator.generate("MD5", fileName))
+          fileDetails = details :: fileDetails
+        }
       }
-    } else {
-      List[File]()
-    }
-  }
-
-  override def getFilesName: List[FileDetails] = {
-    val cassalogDirectory = getClass.getClassLoader.getResource(CASSPER_DIR)
-    val path = cassalogDirectory.getPath + SUFFIX
-    println(cassalogDirectory.toURI)
-    val file = new File(cassalogDirectory.toURI)
-    if (file.exists && file.isDirectory) {
-      file.list().map(fileName => {
-        FileDetails(getVersionFromName(fileName),
-          fileName, getDescription(fileName), getFileType(fileName),
-          Generator.generate("MD5", path + fileName))
-      }).sortBy(_.version).toList
-    } else {
-      List[FileDetails]()
+      fileDetails.sortBy(_.version)
     }
   }
 
@@ -73,13 +60,14 @@ class DefaultFileHandler extends FileHandler with SLF4JLogging {
     }
   }
 
-  override def readFile(file: String): String = {
-    val cassalogDirectory = getClass.getClassLoader.getResource(CASSPER_DIR)
-    val path = cassalogDirectory.getPath + "/"
-    val source = scala.io.Source.fromFile(new File(path + file), "iso-8859-1")
-    val content = source.mkString
-    source.close()
-    content
+  override def readFile(file: String): Try[String] = {
+    Try {
+      val in = getClass.getResourceAsStream(Constants.SUFFIX + file);
+      val reader = new BufferedReader(new InputStreamReader(in))
+      val content = Stream.continually(reader.readLine()).takeWhile(_ != null).mkString("\n")
+      reader.close()
+      content
+    }
   }
 
   override def getLastExecutedVersion(executedList: List[FileDetails]): Option[Double] = {
@@ -108,7 +96,7 @@ class DefaultFileHandler extends FileHandler with SLF4JLogging {
     }
   }
 
-  private def validateFile(file: String) : Boolean={
+  private def validateFile(file: String): Boolean = {
     validateVersion(file) && file.contains("__") && file.contains(".")
   }
 

@@ -2,6 +2,8 @@ package com.cassper.handler.cassandra.search
 
 import com.cassper.model.FileDetails
 
+import scala.util.Try
+
 /**
  * Load configurations define in application.conf from here
  *
@@ -9,5 +11,6 @@ import com.cassper.model.FileDetails
  */
 
 trait SearchHandler {
-  def search(keyspace: String): List[FileDetails]
+
+  def search(keyspace: String): Try[List[FileDetails]]
 }

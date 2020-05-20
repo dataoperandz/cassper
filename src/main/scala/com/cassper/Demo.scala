@@ -1,3 +1,4 @@
+/*
 
 package com.cassper
 
@@ -8,7 +9,7 @@ import com.cassper.cassandra.CassandraCluster
 import com.cassper.handler.CassalogHandler
 import com.cassper.handler.cassandra.search.DefaultSearchHandler
 import com.cassper.handler.cassandra.store.DefaultStoreHandler
-import com.cassper.handler.file.DefaultFileHandler
+import com.cassper.handler.file.{DefaultFileHandler, JarFileClassPathLocationScanner}
 
 /**
  * Load configurations define in application.conf from here
@@ -18,7 +19,8 @@ import com.cassper.handler.file.DefaultFileHandler
 
 object Demo extends CassandraCluster with CassandraConf {
 
-  val fileHandler = new DefaultFileHandler
+  val jar = new JarFileClassPathLocationScanner
+  val fileHandler = new DefaultFileHandler(jar)
   val storeHandler = new DefaultStoreHandler
   val searchHandler = new DefaultSearchHandler
   val cassalogHandler = new CassalogHandler(fileHandler, storeHandler, searchHandler)
@@ -74,3 +76,4 @@ object Demo extends CassandraCluster with CassandraConf {
   }
 
 }
+*/

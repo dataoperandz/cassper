@@ -1,8 +1,8 @@
 package com.cassper.handler.file
 
-import java.io.File
-
 import com.cassper.model.FileDetails
+
+import scala.util.Try
 
 /**
  * Trait for file related actions from here
@@ -11,13 +11,12 @@ import com.cassper.model.FileDetails
  */
 
 trait FileHandler {
-  def getFiles: List[File]
 
-  def getFilesName: List[FileDetails]
+  def getFilesName: Try[List[FileDetails]]
 
   def getVersionFromName(fileName: String): Double
 
-  def readFile(file: String): String
+  def readFile(file: String): Try[String]
 
   def getDescription(file: String): String
 

@@ -1,3 +1,4 @@
+/*
 package com.cassper.cassandra
 
 import akka.event.slf4j.SLF4JLogging
@@ -16,4 +17,4 @@ trait CassandraConnection extends SLF4JLogging {
       .setConnectionsPerHost(HostDistance.LOCAL, 4, 10)
       .setConnectionsPerHost(HostDistance.REMOTE, 2, 4)
   }
-}
+}*/

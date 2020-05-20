@@ -1,3 +1,4 @@
+/*
 package com.cassper.handler.file
 
 import com.cassper.model.FileDetails
@@ -74,9 +75,10 @@ class DefaultFileHandlerTest extends FlatSpec with Matchers {
     fileNames should equal("cql")
   }
 
- /* "Validate version" should "by giving expected file format" in{
+ "Validate version" should "by giving expected file format" in{
     val fileHandler = new DefaultFileHandler
-    val bool = fileHandler.validateVersion("V_1_2_initi.cql")
+    val bool = fileHandler.getLocationUrlsForPath("cassper")
     println(bool)
-  }*/
+  }
 }
+*/

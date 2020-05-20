@@ -2,8 +2,8 @@ package com.cassper.handler.cassandra.store
 
 import java.time.ZoneId
 
-import com.cassper.cassandra.CassandraCluster
 import com.cassper.model.CassperDetails
+import com.datastax.driver.core.Session
 
 import scala.util.Try
 
@@ -13,12 +13,13 @@ import scala.util.Try
  * @author pramod shehan(pramodshehan@gmail.com)
  */
 
-class DefaultStoreHandler extends StoreHandler with CassandraCluster {
+class DefaultStoreHandler(session: Session) extends StoreHandler {
 
   lazy val insertQuery = "insert into <KEY_SPACE>.schema_version (id, installed_rank, description, type, script," +
     " checksum, installed_by, installed_on, execution_time, success) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
 
   override def store(keyspace: String, cassalog: CassperDetails): Unit = {
+    println(s"session isclosed ${session.isClosed}")
     val prepared = session.prepare(insertQuery.replace("<KEY_SPACE>", keyspace))
     val defaultZoneId = ZoneId.systemDefault
 
