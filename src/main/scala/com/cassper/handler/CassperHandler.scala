@@ -63,8 +63,8 @@ class CassperHandler(fileHandler: FileHandler, storeHandler: StoreHandler,
                                lastExecution: Double): Boolean = {
     if (lastExecution < file.version) {
       fileHandler.readFile(file.fileName) match {
-        case Success(query) =>
-          executeScriptOfFile(keyspace, file, query)
+        case Success(content) =>
+          content.split(";").foreach(query => executeScriptOfFile(keyspace, file, query))
           true
         case Failure(exception) =>
           log.error(s"Exception when reading content of script file ${file.fileName}", exception)
@@ -84,10 +84,10 @@ class CassperHandler(fileHandler: FileHandler, storeHandler: StoreHandler,
         if (details.checksum.equals(file.checksum)) {
           true
         } else {
-          throw CassperException(CassperErrorCodeEnum.FILE_CHANGED_ERROR, "file has been changed")
+          throw CassperException(CassperErrorCodeEnum.FILE_CHANGED_ERROR, s"file has been changed ${file.fileName}")
         }
       case _ =>
-        throw CassperException(CassperErrorCodeEnum.FILE_CHANGED_ERROR, "file has been changed")
+        throw CassperException(CassperErrorCodeEnum.FILE_CHANGED_ERROR, s"file has been changed  ${file.fileName}")
     }
   }
 
@@ -98,7 +98,7 @@ class CassperHandler(fileHandler: FileHandler, storeHandler: StoreHandler,
         val end = System.currentTimeMillis
         storeHandler.store(keyspace, CassperDetails(file.version, 1, file.description, file.fileType, file.fileName,
           file.checksum, "cassalog", new Date(System.currentTimeMillis), (end - now), success = true))
-        log.info(s"success ${file.fileName}")
+        //log.info(s"success ${file.fileName}")
       case Failure(exception) =>
         log.error("exception =>", exception)
         throw exception
