@@ -46,10 +46,10 @@ class CassperHandler(fileHandler: FileHandler, storeHandler: StoreHandler,
       fileHandler.getLastExecutedVersion(executedFiles) match {
         case Some(lastExecution) =>
           val value = checkFileVersion(keyspace, executedFiles, file, lastExecution)
-          if(value) executedScriptArr.add(value)
+          if (value) executedScriptArr.add(value)
         case _ =>
           val value = checkFileVersion(keyspace, executedFiles, file, 0)
-          if(value) executedScriptArr.add(value)
+          if (value) executedScriptArr.add(value)
       }
     })
     executedScriptArr.size() match {
@@ -69,8 +69,9 @@ class CassperHandler(fileHandler: FileHandler, storeHandler: StoreHandler,
           val now = System.currentTimeMillis
           content.trim.split(";").foreach(query => executeScriptOfFile(keyspace, file, query))
           val end = System.currentTimeMillis
-          storeHandler.store(keyspace, CassperDetails(file.version, 1, file.description, file.fileType, file.fileName,
-            file.checksum, Constants.ROLE_NAME, new Date(System.currentTimeMillis), end - now, success = true))
+          storeHandler.store(keyspace, CassperDetails(file.version, 1, file.description, file.fileType,
+            getFileNameRemovingDirName(file.fileName), file.checksum, Constants.ROLE_NAME,
+            new Date(System.currentTimeMillis), end - now, success = true))
           true
         case Failure(exception) =>
           log.error(s"Exception when reading content of script file ${file.fileName}", exception)
@@ -100,10 +101,18 @@ class CassperHandler(fileHandler: FileHandler, storeHandler: StoreHandler,
   private def executeScriptOfFile(keyspace: String, file: FileDetails, query: String): Unit = {
     storeHandler.executeStatement(query.trim) match {
       case Success(value) =>
-        //log.info(s"success ${file.fileName}")
+      //log.info(s"success ${file.fileName}")
       case Failure(exception) =>
         log.error(s"exception => $query", exception)
         throw exception
+    }
+  }
+
+  private def getFileNameRemovingDirName(fileName: String): String = {
+    if (fileName.contains(Constants.CASSPER_DIR + Constants.SUFFIX)) {
+      fileName.substring(fileName.indexOf(Constants.SUFFIX) + 1)
+    } else {
+      fileName
     }
   }
 }
