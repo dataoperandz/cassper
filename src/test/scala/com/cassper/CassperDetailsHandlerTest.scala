@@ -12,8 +12,8 @@ class CassperDetailsHandlerTest extends FlatSpec with Matchers {
     val fileHandler = new DefaultFileHandler
     val storeHandler = new DefaultStoreHandler
     val searchHandler = new DefaultSearchHandler
-    val cassalogHandler = new CassalogHandler(fileHandler, storeHandler, searchHandler)
-//    cassalogHandler.RunScript()
+    val cassperHandler = new CassperHandler(fileHandler, storeHandler, searchHandler)
+//    cassperHandler.RunScript()
   }
 }
 */

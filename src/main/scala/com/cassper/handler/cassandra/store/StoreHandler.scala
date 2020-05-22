@@ -11,7 +11,7 @@ import scala.util.Try
  */
 
 trait StoreHandler {
-  def store(keyspace: String, cassalog: CassperDetails)
+  def store(keyspace: String, cassper: CassperDetails)
 
   def executeStatement(query: String): Try[Unit]
 }

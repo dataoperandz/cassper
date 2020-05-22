@@ -8,7 +8,7 @@ class DefaultFileHandlerTest extends FlatSpec with Matchers {
   "CheckFiles" should "get all the files in cassper folder" in {
     val fileHandler = new DefaultFileHandler
     val files =fileHandler.getFiles
-    files should equal(List("/home/pramod/MyWork/cassper/target/scala-2.11/test-classes/cassper/V2_2_second_second.cql", "/home/pramod/MyWork/cassper/target/scala-2.11/test-classes/cassper/V2_1_second_one.cql", "/home/pramod/MyWork/cassper/target/scala-2.11/test-classes/cassper/V3_2_third_second.cql", "/home/pramod/MyWork/cassper/target/scala-2.11/test-classes/cassper/V1_1_intialization.cql", "/home/pramod/MyWork/cassper/target/scala-2.11/test-classes/cassper/V1_2_second.cql", "/home/pramod/MyWork/cassper/target/scala-2.11/test-classes/cassalog/V1_3_third.cql"))
+    files should equal(List("/home/pramod/MyWork/cassper/target/scala-2.11/test-classes/cassper/V2_2_second_second.cql", "/home/pramod/MyWork/cassper/target/scala-2.11/test-classes/cassper/V2_1_second_one.cql", "/home/pramod/MyWork/cassper/target/scala-2.11/test-classes/cassper/V3_2_third_second.cql", "/home/pramod/MyWork/cassper/target/scala-2.11/test-classes/cassper/V1_1_intialization.cql", "/home/pramod/MyWork/cassper/target/scala-2.11/test-classes/cassper/V1_2_second.cql", "/home/pramod/MyWork/cassper/target/scala-2.11/test-classes/cassper/V1_3_third.cql"))
   }
 
   "Get files names " should "get all file names" in {

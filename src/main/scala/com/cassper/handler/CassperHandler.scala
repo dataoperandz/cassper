@@ -9,6 +9,7 @@ import com.cassper.handler.cassandra.search.SearchHandler
 import com.cassper.handler.cassandra.store.StoreHandler
 import com.cassper.handler.file.FileHandler
 import com.cassper.model.{CassperDetails, FileDetails}
+import com.cassper.util.Constants
 
 import scala.util.{Failure, Success}
 
@@ -64,7 +65,12 @@ class CassperHandler(fileHandler: FileHandler, storeHandler: StoreHandler,
     if (lastExecution < file.version) {
       fileHandler.readFile(file.fileName) match {
         case Success(content) =>
-          content.split(";").foreach(query => executeScriptOfFile(keyspace, file, query))
+          println(file.fileName)
+          val now = System.currentTimeMillis
+          content.trim.split(";").foreach(query => executeScriptOfFile(keyspace, file, query))
+          val end = System.currentTimeMillis
+          storeHandler.store(keyspace, CassperDetails(file.version, 1, file.description, file.fileType, file.fileName,
+            file.checksum, Constants.ROLE_NAME, new Date(System.currentTimeMillis), end - now, success = true))
           true
         case Failure(exception) =>
           log.error(s"Exception when reading content of script file ${file.fileName}", exception)
@@ -92,15 +98,11 @@ class CassperHandler(fileHandler: FileHandler, storeHandler: StoreHandler,
   }
 
   private def executeScriptOfFile(keyspace: String, file: FileDetails, query: String): Unit = {
-    val now = System.currentTimeMillis
-    storeHandler.executeStatement(query) match {
+    storeHandler.executeStatement(query.trim) match {
       case Success(value) =>
-        val end = System.currentTimeMillis
-        storeHandler.store(keyspace, CassperDetails(file.version, 1, file.description, file.fileType, file.fileName,
-          file.checksum, "cassalog", new Date(System.currentTimeMillis), (end - now), success = true))
         //log.info(s"success ${file.fileName}")
       case Failure(exception) =>
-        log.error("exception =>", exception)
+        log.error(s"exception => $query", exception)
         throw exception
     }
   }

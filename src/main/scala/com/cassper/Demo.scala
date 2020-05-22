@@ -6,7 +6,7 @@ import java.io.File
 
 import com.cassper.config.CassandraConf
 import com.cassper.cassandra.CassandraCluster
-import com.cassper.handler.CassalogHandler
+import com.cassper.handler.cassperHandler
 import com.cassper.handler.cassandra.search.DefaultSearchHandler
 import com.cassper.handler.cassandra.store.DefaultStoreHandler
 import com.cassper.handler.file.{DefaultFileHandler, JarFileClassPathLocationScanner}
@@ -23,13 +23,13 @@ object Demo extends CassandraCluster with CassandraConf {
   val fileHandler = new DefaultFileHandler(jar)
   val storeHandler = new DefaultStoreHandler
   val searchHandler = new DefaultSearchHandler
-  val cassalogHandler = new CassalogHandler(fileHandler, storeHandler, searchHandler)
+  val cassperHandler = new cassperHandler(fileHandler, storeHandler, searchHandler)
 
   def main(args: Array[String]): Unit = {
 
     session.execute(cassandraKeyspace.replace("<KEY_SPACE>", "cassper_keyspace"))
     session.execute(cassandraDocumentsTable.replace("<KEY_SPACE>", "cassper_keyspace"))
-    cassalogHandler.runScript("cassper_keyspace")
+    cassperHandler.runScript("cassper_keyspace")
     //    storeHandler.executeStatement("") match {
     //      case Success(unit) =>
     //        println("Success")
@@ -40,11 +40,11 @@ object Demo extends CassandraCluster with CassandraConf {
     //    val lines = Source.fromInputStream(fileStream).getLines
     //    lines.foreach(line => println(line))
     //    getListOfFiles("")
-    //    val cassalogDirectory = getClass.getClassLoader.getResource("cassalog")
-    //    println(cassalogDirectory.getPath)
+    //    val cassperDirectory = getClass.getClassLoader.getResource("cassper")
+    //    println(cassperDirectory.getPath)
     //val currentDirectory = new java.io.File(".").getCanonicalPath
-    //    storeHandler.store(Cassalog(1,1,"","","","","", "",null, 1, true))
-    /*val aa = Generator.generate("MD5", "/home/pramod/MyWork/cassalog/target/scala-2.11/classes/cassalog/V_1_1__intialization.cql")
+    //    storeHandler.store(cassper(1,1,"","","","","", "",null, 1, true))
+    /*val aa = Generator.generate("MD5", "/home/pramod/MyWork/cassper/target/scala-2.11/classes/cassper/V_1_1__intialization.cql")
     println(aa)*/
 
     //    val now = new Date()
@@ -63,9 +63,9 @@ object Demo extends CassandraCluster with CassandraConf {
   }*/
 
   def getListOfFiles(dir: String): List[File] = {
-    val cassalogDirectory = getClass.getClassLoader.getResource("cassalog")
+    val cassperDirectory = getClass.getClassLoader.getResource("cassper")
 
-    val file = new File(cassalogDirectory.toURI)
+    val file = new File(cassperDirectory.toURI)
     if (file.exists && file.isDirectory) {
       val aa = file.listFiles().toList
       val source = scala.io.Source.fromFile(aa(0), "iso-8859-1").mkString
