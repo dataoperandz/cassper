@@ -1,4 +1,3 @@
-
 name := "cassper"
 
 version := "0.1"
