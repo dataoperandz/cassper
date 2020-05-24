@@ -4,6 +4,9 @@
 
 Cassper is a schema change management tool **(version controller)** and tool for Apache Cassandra that can be used with applications running on the JVM.
 
+![cassper-original](https://user-images.githubusercontent.com/65799952/82756510-53b45980-9df8-11ea-9e9c-215639d6e0b1.png)
+
+
 ## Why
 Versioned migrations have a version, a description and a checksum. The version must be unique. The description is purely informative for you to be able to remember what each migration does. The checksum is there to detect accidental changes. Versioned migrations are the most common type of migration. They are applied in order exactly once.
 
