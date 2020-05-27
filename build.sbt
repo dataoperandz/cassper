@@ -10,7 +10,10 @@ version := "0.3"
 organization := "io.github.dataoperandz"
 homepage := Some(url("https://github.com/dataoperandz/cassper"))
 scmInfo := Some(ScmInfo(url("https://github.com/dataoperandz/cassper"), "git@github.com:dataoperandz/cassper.git"))
-developers := List(Developer("rahasak", "rahasak", "rahasak@scorelab.org", url("https://gitlab.com/rahasak-labs")))
+developers := List(
+    Developer("promod shehan", "pramod shehan", "pramod.shehan@gmail.com", url("https://github.com/pramodShehan5")),
+    Developer("rahasak", "rahasak", "rahasak@scorelab.org", url("https://gitlab.com/rahasak-labs"))
+)
 licenses += ("Apache-2.0", url("http://www.apache.org/licenses/LICENSE-2.0"))
 publishMavenStyle := true
 
