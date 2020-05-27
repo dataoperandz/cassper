@@ -59,7 +59,26 @@ Create_table
 
 Cassper can be used in Java and scala
 
-**i. Use keyspace name as parameter**
+**i. Add dependency**
+
+Maven
+```
+<dependency>
+  <groupId>io.github.dataoperandz</groupId>
+  <artifactId>cassper</artifactId>
+  <version>0.3</version>
+</dependency>
+```
+
+SBT
+
+```$xslt
+libraryDependencies += "io.github.dataoperandz" % "cassper" % "0.3"
+```
+
+https://search.maven.org/artifact/io.github.dataoperandz/cassper/0.3/jar
+
+**ii. Use keyspace name as parameter**
   ```
 
 val builder = new Cassper().build("keyspace", session)
@@ -68,7 +87,7 @@ builder.migrate("keyspace")
 - session- com.datastax.driver.core.Session
 - keyspace- keyspace name
 
-**ii . Uses keyspace of session**
+**iii . Uses keyspace of session**
 ```
 val builder = new Cassper().build(session)
 builder.migrate("keyspace")
