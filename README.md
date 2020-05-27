@@ -24,7 +24,7 @@ CQL-based migrations are typically used for
 - Simple reference data changes (CRUD in reference data tables)
 
 #Naming
-In order to be picked up by Flyway, SQL migrations must comply with the following naming pattern:
+In order to be picked up by Cassper, CQL migrations must comply with the following naming pattern:
 
 ![naming](https://user-images.githubusercontent.com/9468378/82719687-6f214680-9cca-11ea-9119-8abedadd4846.png)
 
@@ -59,7 +59,26 @@ Create_table
 
 Cassper can be used in Java and scala
 
-**i. Use keyspace name as parameter**
+**i. Add dependency**
+
+Maven
+```
+<dependency>
+  <groupId>io.github.dataoperandz</groupId>
+  <artifactId>cassper</artifactId>
+  <version>0.3</version>
+</dependency>
+```
+
+SBT
+
+```$xslt
+libraryDependencies += "io.github.dataoperandz" % "cassper" % "0.3"
+```
+
+https://search.maven.org/artifact/io.github.dataoperandz/cassper/0.3/jar
+
+**ii. Use keyspace name as parameter**
   ```
 
 val builder = new Cassper().build("keyspace", session)
@@ -68,7 +87,7 @@ builder.migrate("keyspace")
 - session- com.datastax.driver.core.Session
 - keyspace- keyspace name
 
-**ii . Uses keyspace of session**
+**iii . Uses keyspace of session**
 ```
 val builder = new Cassper().build(session)
 builder.migrate("keyspace")
