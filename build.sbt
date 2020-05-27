@@ -1,17 +1,26 @@
+scalaVersion := "2.11.12"
+
+// library name
 name := "cassper"
 
-version := "0.2"
+// library version
+version := "0.3"
 
-// pom settings for sonatype
+// groupId, SCM, license information
 organization := "io.github.dataoperandz"
 homepage := Some(url("https://github.com/dataoperandz/cassper"))
 scmInfo := Some(ScmInfo(url("https://github.com/dataoperandz/cassper"), "git@github.com:dataoperandz/cassper.git"))
 developers := List(Developer("rahasak", "rahasak", "rahasak@scorelab.org", url("https://github.com/rahasak")))
 licenses += ("Apache-2.0", url("http://www.apache.org/licenses/LICENSE-2.0"))
 publishMavenStyle := true
+
+// disable publishw ith scala version, otherwise artifact name will include scala version 
+// e.g cassper_2.11
 crossPaths := false
 
 // add sonatype repository settings
+// snapshot versions publish to sonatype snapshot repository
+// other versions publish to sonatype staging repository
 publishTo := Some(
   if (isSnapshot.value)
     Opts.resolver.sonatypeSnapshots
@@ -19,17 +28,16 @@ publishTo := Some(
     Opts.resolver.sonatypeStaging
 )
 
+// other library dependencies
 libraryDependencies ++= {
   val cassandraVersion = "3.1.1"
   val akkaVersion = "2.5.19"
-
+  
   Seq(
-    "com.datastax.cassandra" % "cassandra-driver-core" % cassandraVersion,
-    "com.typesafe.akka" %% "akka-actor" % akkaVersion,
-    "com.typesafe.akka" %% "akka-stream" % akkaVersion,
-    "com.typesafe.akka" %% "akka-slf4j" % akkaVersion,
-    "org.scalatest" %% "scalatest" % "3.0.4" % Test
-  )
+      "com.datastax.cassandra"  % "cassandra-driver-core"   % cassandraVersion,
+      "com.typesafe.akka"       %% "akka-actor"             % akkaVersion,
+      "com.typesafe.akka"       %% "akka-stream"            % akkaVersion,
+      "com.typesafe.akka"       %% "akka-slf4j"             % akkaVersion,
+      "org.scalatest"           %% "scalatest"              % "3.0.4"                 % Test
+    )
 }
-
-scalaVersion := "2.11.12"
