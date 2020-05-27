@@ -24,7 +24,7 @@ CQL-based migrations are typically used for
 - Simple reference data changes (CRUD in reference data tables)
 
 #Naming
-In order to be picked up by Flyway, SQL migrations must comply with the following naming pattern:
+In order to be picked up by Cassper, CQL migrations must comply with the following naming pattern:
 
 ![naming](https://user-images.githubusercontent.com/9468378/82719687-6f214680-9cca-11ea-9119-8abedadd4846.png)
 
