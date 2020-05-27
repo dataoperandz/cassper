@@ -4,8 +4,6 @@ import java.util
 import java.util.Date
 
 import akka.event.slf4j.SLF4JLogging
-import com.cassper.exception.CassperErrorCodeEnum
-import com.cassper.model.CassperDetails
 import com.dataoperandz.cassper.exception.{CassperErrorCodeEnum, CassperException}
 import com.dataoperandz.cassper.handler.cassandra.search.SearchHandler
 import com.dataoperandz.cassper.handler.cassandra.store.StoreHandler

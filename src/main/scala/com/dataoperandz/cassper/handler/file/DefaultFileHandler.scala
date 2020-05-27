@@ -3,7 +3,6 @@ package com.dataoperandz.cassper.handler.file
 import java.io.{BufferedReader, InputStreamReader}
 
 import akka.event.slf4j.SLF4JLogging
-import com.cassper.exception.CassperErrorCodeEnum
 import com.dataoperandz.cassper.exception.{CassperErrorCodeEnum, CassperException}
 import com.dataoperandz.cassper.handler.file.scanner.ClassPathLocationScanner
 import com.dataoperandz.cassper.handler.hashing.Generator

@@ -1,8 +1,6 @@
 package com.dataoperandz.cassper
 
 import akka.event.slf4j.SLF4JLogging
-import com.cassper.client.CassperClient
-import com.cassper.exception.CassperErrorCodeEnum
 import com.dataoperandz.cassper.client.{CassperClient, DefaultCassperClient}
 import com.dataoperandz.cassper.config.CassandraConf
 import com.dataoperandz.cassper.exception.{CassperErrorCodeEnum, CassperException}

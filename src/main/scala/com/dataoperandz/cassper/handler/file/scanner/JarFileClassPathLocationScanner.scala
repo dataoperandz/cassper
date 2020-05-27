@@ -5,7 +5,6 @@ import java.util
 import java.util.jar.JarFile
 
 import akka.event.slf4j.SLF4JLogging
-import com.cassper.exception.CassperErrorCodeEnum
 import com.dataoperandz.cassper.exception.{CassperErrorCodeEnum, CassperException}
 
 import scala.util.{Failure, Success, Try}
