@@ -4,7 +4,7 @@ scalaVersion := "2.11.12"
 name := "cassper"
 
 // library version
-version := "0.3"
+version := "0.4"
 
 // groupId, SCM, license information
 organization := "io.github.dataoperandz"
