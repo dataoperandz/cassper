@@ -1,67 +1,40 @@
-# Cassper Quickstart Guide
+# Cassper
 
-
-
-Cassper is a schema change management tool **(version controller)** and tool for Apache Cassandra that can be used with applications running on the JVM.
+Cassper is a schema change management tool **(version controller)** and tool for `Apache Cassandra` that can be used with applications running on the `JVM`.
 
 ![cassper-original](https://user-images.githubusercontent.com/65799952/82756510-53b45980-9df8-11ea-9e9c-215639d6e0b1.png)
 
 
-## Why
-Versioned migrations have a version, a description and a checksum. The version must be unique. The description is purely informative for you to be able to remember what each migration does. The checksum is there to detect accidental changes. Versioned migrations are the most common type of migration. They are applied in order exactly once.
+### Background
 
- Fortunately, there are tool for managing schema changes like Liquibase, Flyway, and Active Record for Ruby on Rails applications. These tools however, are designed specifically for relational databases.  Cassper is designed only for use with Cassandra, not for any other database systems.
+Versioned migrations have a version, a description and a checksum. The version must be unique. The description is purely informative for you to be able to remember what each migration does. The checksum is there to detect accidental changes. Versioned migrations are the most common type of migration. They are applied in order exactly once. Fortunately, there are tool for managing schema changes like `Liquibase`, `Flyway`, and `Active Record` for `Ruby on Rails` applications. These tools however, are designed specifically for relational databases. 
 
-Cassper is written in Scala. 
+`Cassper` is a database migration tool which maily targetted for `Apache Cassandra`. It has written with `Scala` and designed based on `Flayway` schema migration tool. Cassper schema migrations are most commonly written in `CQL`. This makes it easy to get started and leverage any existing scripts, tools and skills. It gives you access to the full set of capabilities of your cassandra database and eliminates the need to understand any intermediate translation layer. `CQL` migrations are typically used for
 
+```
+1. DDL changes (CREATE/ALTER/DROP statements for TABLES,TYPES,KEYSPACES etc)
+2. Simple reference data changes (CRUD in reference data tables)
+```
 
-## CQL Based Migration
-Migrations are most commonly written in CQL. This makes it easy to get started and leverage any existing scripts, tools and skills. It gives you access to the full set of capabilities of your cassandra database and eliminates the need to understand any intermediate translation layer.
+### Cassper migration scripts
 
-CQL-based migrations are typically used for
+Cassper schema migration scripts need to put in the `src/main/resources/cassper` directory in your sbt project. The schema migration script needs to follow a specific format(the format is similar to `Flyway` migration script format). Following is the format of schema migration script `V_1_2__create_table_account.cql`.
 
-- DDL changes (CREATE/ALTER/DROP statements for TABLES,TYPES,KEYSPACES,…)
-- Simple reference data changes (CRUD in reference data tables)
+![cassper-schema-format](https://user-images.githubusercontent.com/2450752/83220095-1295af80-a140-11ea-82d2-05fc2f333cab.png)
 
-#Naming
-In order to be picked up by Cassper, CQL migrations must comply with the following naming pattern:
+When running the migration, Cassper will executes each and every migration scripts in the src/main/resources/cassper director. The migration script executing order is determined by the version number. For an example 1.0, 1.1, 1.2 etc. Following are the schema migration scripts that I have added in the `src/main/resources/cassper` directory.
 
-![naming](https://user-images.githubusercontent.com/9468378/82719687-6f214680-9cca-11ea-9119-8abedadd4846.png)
+```
+❯❯ ls -al src/main/resources/cassper
+-rw-r--r--  1 eranga  staff  158 May 28 00:23 V_1_1__create_udt_trans.cql
+-rw-r--r--  1 eranga  staff  361 May 28 03:34 V_1_2__create_table_accounts.cql
+-rw-r--r--  1 eranga  staff  361 May 28 03:34 V_1_3__alter_table_accounts.cql
+```
 
-The file name consists of the following parts:
-- **Prefix**- V for versioned.
- - **Version**- Cassper has two versions.
-  
- Examples- 1_1 , 1_2, 2_1, 2_2 ………….. 400_1
- - **Seperator1**- This is used to seperate version and prefix.
-  - **Seperator2**- This is used to seperate version and description.
- -  **Description**-  Underscores separate the words.
-  
-  Examples- 
-  ```
- Add_new_keyspace
-initialization
-Create_table
-  ```
-  - **Suffix**- .cql
-  
-  Examples for naming- 
-  - V_1_1__my_create_keyspace.cql
-  - V_1_2__my_create_udt.cql
-  - V_1_3__my_create_tables.cql
-  
-  # Discovery
-  Cassper discovers all the migration files within cassper directory inside resources.
-  
-  ![Screenshot from 2020-05-24 08-39-34](https://user-images.githubusercontent.com/65799952/82746857-ed0c4d00-9db1-11ea-8141-abbc5bd83860.png)
+### Cassper dependency
 
-#Usage
+Cassper provides libraries for `Scala Sbt` applications and `Java Maven`. Following are the `Maven` and `Sbt` dependencies of Cassper.
 
-Cassper can be used in Java and scala
-
-**i. Add dependency**
-
-Maven
 ```
 <dependency>
   <groupId>io.github.dataoperandz</groupId>
@@ -70,35 +43,21 @@ Maven
 </dependency>
 ```
 
-SBT
-
-```$xslt
+```
 libraryDependencies += "io.github.dataoperandz" % "cassper" % "0.3"
 ```
 
-https://search.maven.org/artifact/io.github.dataoperandz/cassper/0.3/jar
+# Run migrations
 
-**ii. Use keyspace name as parameter**
-  ```
+When running the migration, Cassper scans the migration scripts in the `src/main/resources/cassper` directory and execute them. Cassper stores executed migration script information in `schema_version` table. This table reside in the Cassandra keyspace where migration is running. Once migration script executed, Cassper saves the migration script information in `schema_version` table. When next time executing the migration it checks the schema_version table and finds the executed migration script information. If migration script executed one time, it won’t execute it again. Cassper not allowed to changes the previously executed migration scripts. It stores hash of the executed migration scripts on schema_version table and compare them when next time executing the migration. If script altered(that means hash is changed) it will raise an exception. Following is the way to run the migration.
 
-val builder = new Cassper().build("keyspace", session)
-builder.migrate("keyspace")
 ```
-- session- com.datastax.driver.core.Session
-- keyspace- keyspace name
-
-**iii . Uses keyspace of session**
+// session- com.datastax.driver.core.Session
+// keyspace - keyspace name
+val builder = new Cassper().build("mystiko", session)
+builder.migrate("mystiko")
 ```
-val builder = new Cassper().build(session)
-builder.migrate("keyspace")
-```
-#How it works
-When we use Cassper, it is created table called "schema_version"
 
-![Screenshot from 2020-05-24 10-07-43](https://user-images.githubusercontent.com/65799952/82746912-6efc7600-9db2-11ea-82e1-bba8d630590e.png)
+### Test migrations
 
-Scripts are running ascending order by using version of the file. So we must use correct version when adding the new script file. Always it should be greater than existing latest version.
-
-![Screenshot from 2020-05-24 10-13-48](https://user-images.githubusercontent.com/65799952/82746922-863b6380-9db2-11ea-8da3-2ed8a5203773.png)
-
-We can not change existing script files in Cassper. It will end up with exception.
+You can test the Cassper migration in your local environment by running Main method of the application(e.g with `IntelliJ IDEA`). In production environment you can build a `.jar` file of the application and run it with `Docker` kind of service. Then Cassper scans the `.jar` file and finds the migration scripts on `src/main/resources/cassper` directory and execute them.
