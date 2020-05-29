@@ -38,7 +38,7 @@ When running the migration, Cassper will executes each and every migration scrip
 
 ## Cassper dependency
 
-Cassper provides library for `Scala Sbt` applications and `Java Maven` applications. Following are the `Maven` and `Sbt` dependencies of Cassper.
+`Maven` dependency for `Java` applications
 
 ```
 <dependency>
@@ -47,6 +47,8 @@ Cassper provides library for `Scala Sbt` applications and `Java Maven` applicati
   <version>0.3</version>
 </dependency>
 ```
+
+`Sbt` dependency for `Scala` applications
 
 ```
 libraryDependencies += "io.github.dataoperandz" % "cassper" % "0.3"
