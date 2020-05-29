@@ -6,6 +6,7 @@ name := "cassper"
 // library version
 version := "0.4"
 
+// project description
 description := "Cassper is a schema version controller for Apache Cassandra that can be used with applications running on the JVM."
 
 // groupId, SCM, license information
