@@ -34,6 +34,41 @@ V_1_2__create_table_accounts.cql
 V_1_3__alter_table_accounts.cql
 ```
 
+`V_1_1__create_udt_trans.cql` migration script
+
+```
+CREATE TYPE IF NOT EXISTS rahasak.trans (
+  execer TEXT,
+  id TEXT,
+  actor TEXT,
+  message TEXT,
+  digsig TEXT,
+  timestamp TIMESTAMP
+);
+```
+
+`V_1_2__create_table_accounts.cql` migration script
+
+```
+CREATE TABLE IF NOT EXISTS rahasak.accounts (
+  id TEXT,
+  name TEXT,
+  phone TEXT,
+  email TEXT,
+  disabled BOOLEAN,
+  timestamp TIMESTAMP,
+
+  PRIMARY KEY(id)
+);
+```
+
+`V_1_3__alter_table_accounts.cql` migration script
+
+```
+ALTER TABLE rahasak.accounts
+    ADD address TEXT;
+```
+
 ---
 
 ## Cassper dependency
