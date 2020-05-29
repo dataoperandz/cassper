@@ -4,7 +4,7 @@ import java.io.{BufferedReader, InputStreamReader}
 
 import akka.event.slf4j.SLF4JLogging
 import com.dataoperandz.cassper.exception.{CassperErrorCodeEnum, CassperException}
-import com.dataoperandz.cassper.handler.file.scanner.ClassPathLocationScanner
+import com.dataoperandz.cassper.handler.file.scanner.ScannerFactory
 import com.dataoperandz.cassper.handler.hashing.Generator
 import com.dataoperandz.cassper.model.FileDetails
 import com.dataoperandz.cassper.util.Constants
@@ -12,25 +12,26 @@ import com.dataoperandz.cassper.util.Constants
 import scala.util.Try
 
 /**
- * File related all the actions from here
- *
- * @author pramod shehan(pramodshehan@gmail.com)
- */
+  * File related all the actions from here
+  *
+  * @author pramod shehan(pramodshehan@gmail.com)
+  */
 
-class DefaultFileHandler(scanner: ClassPathLocationScanner) extends FileHandler with SLF4JLogging {
+class DefaultFileHandler(scanner: ScannerFactory) extends FileHandler with SLF4JLogging {
 
   override def getFilesName: Try[List[FileDetails]] = {
     Try {
-      val cassperDirectory = scanner.findResourceNames(Constants.CASSPER_DIR, getClass.getClassLoader.
+      val cassperDirectory = scanner.getScannerManager.findResourceNames(Constants.CASSPER_DIR, getClass.getClassLoader.
         getResource(Constants.CASSPER_DIR))
-      val value = cassperDirectory.iterator();
+      val value = cassperDirectory.iterator()
       var fileDetails = List[FileDetails]()
       while (value.hasNext) {
         val fileName = value.next()
         if (fileName.contains(".cql")) {
+          val payload = scanner.getScannerManager.getPayload(fileName)
           val details = FileDetails(getVersionFromName(fileName),
             fileName, getDescription(fileName), getFileType(fileName),
-            Generator.generate("MD5", fileName))
+            Generator.generate("MD5", payload))
           fileDetails = details :: fileDetails
         }
       }
@@ -114,4 +115,6 @@ class DefaultFileHandler(scanner: ClassPathLocationScanner) extends FileHandler 
       false
     }
   }
+
+
 }

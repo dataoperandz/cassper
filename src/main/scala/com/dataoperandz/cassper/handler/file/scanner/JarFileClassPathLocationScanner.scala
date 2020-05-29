@@ -1,5 +1,6 @@
 package com.dataoperandz.cassper.handler.file.scanner
 
+import java.io.{BufferedReader, InputStreamReader}
 import java.net.{JarURLConnection, URL, URLConnection}
 import java.util
 import java.util.jar.JarFile
@@ -17,6 +18,14 @@ class JarFileClassPathLocationScanner extends ClassPathLocationScanner with SLF4
     finally {
       jarFile.close()
     }
+  }
+
+
+  override def getPayload(path: String): Array[Byte] = {
+    val in = getClass.getResourceAsStream("/" + path)
+    val reader = new BufferedReader(new InputStreamReader(in))
+    val content = Stream.continually(reader.readLine()).takeWhile(_ != null).mkString("\n")
+    content.getBytes
   }
 
   private def findResourceNamesFromJarFile(jarFile: JarFile, location: String): util.TreeSet[String] = {
@@ -50,14 +59,14 @@ class JarFileClassPathLocationScanner extends ClassPathLocationScanner with SLF4
   }
 
   /**
-   * No JarURLConnection -> need to resort to URL file parsing.
-   * We'll assume URLs of the format "jar:path!/entry", with the protocol
-   * being arbitrary as long as following the entry format.
-   * We'll also handle paths with and without leading "file:" prefix.
-   *
-   * @param locationUrl
-   * @return Try[JarFile]
-   */
+    * No JarURLConnection -> need to resort to URL file parsing.
+    * We'll assume URLs of the format "jar:path!/entry", with the protocol
+    * being arbitrary as long as following the entry format.
+    * We'll also handle paths with and without leading "file:" prefix.
+    *
+    * @param locationUrl
+    * @return Try[JarFile]
+    */
   private def getJarFileWhenNoJarUrlConnection(locationUrl: URL): Try[JarFile] = {
     Try {
       val urlFile = locationUrl.getFile
