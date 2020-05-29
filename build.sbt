@@ -6,6 +6,8 @@ name := "cassper"
 // library version
 version := "0.3"
 
+description := "Cassper is a schema version controller for Apache Cassandra that can be used with applications running on the JVM."
+
 // groupId, SCM, license information
 organization := "io.github.dataoperandz"
 homepage := Some(url("https://github.com/dataoperandz/cassper"))
