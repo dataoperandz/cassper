@@ -10,10 +10,10 @@ Schema migrations tool for `Apache Cassandra` that can be used with applications
 
 Versioned migrations have a version, a description and a checksum. The version must be unique. The description is purely informative for you to be able to remember what each migration does. The checksum is there to detect accidental changes. Versioned migrations are the most common type of migration. They are applied in order exactly once. Fortunately, there are tool for managing schema changes like `Liquibase`, `Flyway`, and `Active Record` for `Ruby on Rails` applications. These tools however, are designed specifically for relational databases.
 
-`Cassper` schema migration tool maily targetted for `Apache Cassandra`. It can be used as as Apache Cassandra schema change management tool(schema version controller). Cassper has written with `Scala` and designed based on `Flayway` schema migration tool. Cassper schema migrations scripts are most commonly written in `CQL`. This makes it easy to get started and leverage any existing scripts, tools and skills. It gives you access to the full set of capabilities of your cassandra database and eliminates the need to understand any intermediate translation layer. `CQL` migrations are typically used for
+`Cassper` schema migration tool maily targetted for `Apache Cassandra`. It can be used as as Apache Cassandra schema change management tool(schema version controller). Cassper has written with `Scala` and designed based on `Flayway` schema migration tool. Cassper schema migrations scripts are most commonly written in `CQL`. This makes it easy to get started and leverage any existing scripts, tools and skills. It gives you access to the full set of capabilities of your Cassandra database and eliminates the need to understand any intermediate translation layer. `Cassper` schema migrations can be used for
 
 ```
-1. DDL changes (CREATE/ALTER/DROP statements for TABLES,TYPES,KEYSPACES etc)
+1. DDL changes (CREATE/ALTER/DROP statements for TABLES, UDTS, KEYSPACES etc)
 2. Simple reference data changes (CRUD in reference data tables)
 ```
 
@@ -29,9 +29,9 @@ When running the migration, Cassper will executes each and every migration scrip
 
 ```
 ❯❯ ls -al src/main/resources/cassper
--rw-r--r--  1 eranga  staff  158 May 28 00:23 V_1_1__create_udt_trans.cql
--rw-r--r--  1 eranga  staff  361 May 28 03:34 V_1_2__create_table_accounts.cql
--rw-r--r--  1 eranga  staff  361 May 28 03:34 V_1_3__alter_table_accounts.cql
+V_1_1__create_udt_trans.cql
+V_1_2__create_table_accounts.cql
+V_1_3__alter_table_accounts.cql
 ```
 
 ---
