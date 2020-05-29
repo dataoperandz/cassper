@@ -1,11 +1,11 @@
 # Cassper
 
-Cassper is a schema change management tool **(version controller)** and tool for `Apache Cassandra` that can be used with applications running on the `JVM`.
+Schema change management tool(`version controller`) for `Apache Cassandra` that can be used with applications running on the `JVM`.
 
 ![cassper-original](https://user-images.githubusercontent.com/65799952/82756510-53b45980-9df8-11ea-9e9c-215639d6e0b1.png)
 
 
-### Background
+### Cassper backgournd
 
 Versioned migrations have a version, a description and a checksum. The version must be unique. The description is purely informative for you to be able to remember what each migration does. The checksum is there to detect accidental changes. Versioned migrations are the most common type of migration. They are applied in order exactly once. Fortunately, there are tool for managing schema changes like `Liquibase`, `Flyway`, and `Active Record` for `Ruby on Rails` applications. These tools however, are designed specifically for relational databases. 
 
@@ -22,7 +22,7 @@ Cassper schema migration scripts need to put in the `src/main/resources/cassper`
 
 ![cassper-schema-format](https://user-images.githubusercontent.com/2450752/83220095-1295af80-a140-11ea-82d2-05fc2f333cab.png)
 
-When running the migration, Cassper will executes each and every migration scripts in the src/main/resources/cassper director. The migration script executing order is determined by the version number. For an example 1.0, 1.1, 1.2 etc. Following are the schema migration scripts that I have added in the `src/main/resources/cassper` directory.
+When running the migration, Cassper will executes each and every migration scripts in the src/main/resources/cassper director. The migration script executing order is determined by the version number. For an example `1.0`, `1.1`, `1.2` etc. Following are some example migration scripts that can be put in `src/main/resources/cassper` directory.
 
 ```
 ❯❯ ls -al src/main/resources/cassper
@@ -47,7 +47,7 @@ Cassper provides libraries for `Scala Sbt` applications and `Java Maven`. Follow
 libraryDependencies += "io.github.dataoperandz" % "cassper" % "0.3"
 ```
 
-# Run migrations
+### Run migrations
 
 When running the migration, Cassper scans the migration scripts in the `src/main/resources/cassper` directory and execute them. Cassper stores executed migration script information in `schema_version` table. This table reside in the Cassandra keyspace where migration is running. Once migration script executed, Cassper saves the migration script information in `schema_version` table. When next time executing the migration it checks the schema_version table and finds the executed migration script information. If migration script executed one time, it won’t execute it again. Cassper not allowed to changes the previously executed migration scripts. It stores hash of the executed migration scripts on schema_version table and compare them when next time executing the migration. If script altered(that means hash is changed) it will raise an exception. Following is the way to run the migration.
 
