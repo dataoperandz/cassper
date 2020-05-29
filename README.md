@@ -62,6 +62,6 @@ builder.migrate("mystiko")
 ```
 
 
-### Test migrations
+## Test migrations
 
 You can test the Cassper migration in your local environment by running `Main` method of the application(e.g with `IntelliJ IDEA`). In production environment you can build a `.jar` file of the application and run it with `Docker` kind of service. Then Cassper scans the `.jar` file and finds the migration scripts on `src/main/resources/cassper` directory and execute them.
