@@ -7,7 +7,7 @@ name := "cassper"
 version := "0.4"
 
 // project description
-description := "Cassper is a schema version controller for Apache Cassandra that can be used with applications running on the JVM."
+description := "Schema migrations tool for `Apache Cassandra` that can be used with `JVM` applications."
 
 // groupId, SCM, license information
 organization := "io.github.dataoperandz"
