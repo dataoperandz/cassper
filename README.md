@@ -60,8 +60,7 @@ CREATE TABLE IF NOT EXISTS rahasak.accounts (
 `V_1_3__alter_table_accounts.cql` migration script
 
 ```
-ALTER TABLE rahasak.accounts
-    ADD address TEXT;
+ALTER TABLE rahasak.accounts ADD address TEXT;
 ```
 
 ---
@@ -88,7 +87,7 @@ libraryDependencies += "io.github.dataoperandz" % "cassper" % "0.4"
 
 ## Run migrations
 
-When running the migration, Cassper scans the migration scripts in the `src/main/resources/cassper` directory and execute them. Cassper stores executed migration script information in `schema_version` table. This table reside in the Cassandra keyspace where migration is running. Once migration script executed, Cassper saves the migration script information in `schema_version` table. When next time executing the migration it checks the schema_version table and finds the executed migration script information. If migration script executed one time, it won’t execute it again. Cassper not allowed to changes the previously executed migration scripts. It stores hash of the executed migration scripts on schema_version table and compare them when next time executing the migration. If script altered(that means hash is changed) it will raise an exception. Following is the way to run the migration. `Cassper().builder` required `com.datastax.driver.core.Session`. You can pass the `com.datastax.driver.core.Session` instance which is using in your application to the Cassper.
+When running the migration, Cassper scans the migration scripts in the `src/main/resources/cassper` directory and execute them. Cassper stores executed migration script information in `schema_version` table. This table reside in the Cassandra keyspace where migration is running. Once migration script executed, Cassper saves the migration script information in `schema_version` table. When next time executing the migration it checks the schema_version table and finds the executed migration script information. If migration script executed one time, it won’t execute it again. Cassper not allowed to changes the previously executed migration scripts. It stores hash of the executed migration scripts on schema_version table and compare them when next time executing the migration. If script altered(that means hash is changed) it will raise an exception. Following is the way to run the migration. `Cassper().builder()` required `com.datastax.driver.core.Session`. You can pass the `com.datastax.driver.core.Session` instance which is using in your application to the Cassper.
 
 ```
 // session - com.datastax.driver.core.Session
