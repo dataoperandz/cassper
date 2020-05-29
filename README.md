@@ -74,14 +74,14 @@ ALTER TABLE rahasak.accounts
 <dependency>
   <groupId>io.github.dataoperandz</groupId>
   <artifactId>cassper</artifactId>
-  <version>0.3</version>
+  <version>0.4</version>
 </dependency>
 ```
 
 `Sbt` dependency for `Scala` applications
 
 ```
-libraryDependencies += "io.github.dataoperandz" % "cassper" % "0.3"
+libraryDependencies += "io.github.dataoperandz" % "cassper" % "0.4"
 ```
 
 ---
