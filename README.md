@@ -97,9 +97,9 @@ When running the migration, Cassper scans the migration scripts in the `src/main
 
 ```
 // session - com.datastax.driver.core.Session
-// keyspace - keyspace name
-val builder = new Cassper().build("mystiko", session)
-builder.migrate("mystiko")
+// rahasak - keyspace name
+val builder = new Cassper().build("rahasak", session)
+builder.migrate("rahasak")
 ```
 
 ---
