@@ -4,6 +4,7 @@ Schema change management tool(`version controller`) for `Apache Cassandra` that 
 
 ![cassper-original](https://user-images.githubusercontent.com/65799952/82756510-53b45980-9df8-11ea-9e9c-215639d6e0b1.png)
 
+---
 
 ## Cassper backgournd
 
@@ -16,6 +17,7 @@ Versioned migrations have a version, a description and a checksum. The version m
 2. Simple reference data changes (CRUD in reference data tables)
 ```
 
+---
 
 ## Cassper migration scripts
 
@@ -32,6 +34,7 @@ When running the migration, Cassper will executes each and every migration scrip
 -rw-r--r--  1 eranga  staff  361 May 28 03:34 V_1_3__alter_table_accounts.cql
 ```
 
+---
 
 ## Cassper dependency
 
@@ -49,6 +52,7 @@ Cassper provides library for `Scala Sbt` applications and `Java Maven` applicati
 libraryDependencies += "io.github.dataoperandz" % "cassper" % "0.3"
 ```
 
+---
 
 ## Run migrations
 
@@ -61,6 +65,7 @@ val builder = new Cassper().build("mystiko", session)
 builder.migrate("mystiko")
 ```
 
+---
 
 ## Test migrations
 
