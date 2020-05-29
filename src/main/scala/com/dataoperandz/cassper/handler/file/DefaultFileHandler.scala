@@ -61,16 +61,16 @@ class DefaultFileHandler(scanner: ScannerFactory) extends FileHandler with SLF4J
     }
   }
 
-  override def readFile(file: String): Try[String] = {
+ /* override def readFile(file: String): Try[String] = {
     Try {
-      val in = getClass.getResourceAsStream(Constants.SUFFIX + file);
+      val in = getClass.getResourceAsStream(Constants.SUFFIX + file)
       val reader = new BufferedReader(new InputStreamReader(in))
       val content = Stream.continually(reader.readLine()).takeWhile(_ != null).mkString("\n")
       reader.close()
       content
     }
   }
-
+*/
   override def getLastExecutedVersion(executedList: List[FileDetails]): Option[Double] = {
     executedList.lastOption.map(_.version)
   }

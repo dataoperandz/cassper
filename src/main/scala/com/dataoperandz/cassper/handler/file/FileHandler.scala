@@ -16,7 +16,7 @@ trait FileHandler {
 
   def getVersionFromName(fileName: String): Double
 
-  def readFile(file: String): Try[String]
+//  def readFile(file: String): Try[String]
 
   def getDescription(file: String): String
 

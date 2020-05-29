@@ -8,19 +8,22 @@ import com.dataoperandz.cassper.exception.{CassperErrorCodeEnum, CassperExceptio
 import com.dataoperandz.cassper.handler.cassandra.search.SearchHandler
 import com.dataoperandz.cassper.handler.cassandra.store.StoreHandler
 import com.dataoperandz.cassper.handler.file.FileHandler
+import com.dataoperandz.cassper.handler.file.scanner.ScannerFactory
 import com.dataoperandz.cassper.model.{CassperDetails, FileDetails}
 import com.dataoperandz.cassper.util.Constants
 
 import scala.util.{Failure, Success}
 
 /**
- * Load configurations define in application.conf from here
- *
- * @author pramod shehan(pramodshehan@gmail.com)
- */
+  * Load configurations define in application.conf from here
+  *
+  * @author pramod shehan(pramodshehan@gmail.com)
+  */
 
-class CassperHandler(fileHandler: FileHandler, storeHandler: StoreHandler,
-                     searchHandler: SearchHandler) extends SLF4JLogging {
+class CassperHandler(fileHandler: FileHandler,
+                     storeHandler: StoreHandler,
+                     searchHandler: SearchHandler,
+                     scanner: ScannerFactory) extends SLF4JLogging {
   def runScript(keyspace: String): Unit = {
     fileHandler.getFilesName match {
       case Success(fileDetails) =>
@@ -63,7 +66,7 @@ class CassperHandler(fileHandler: FileHandler, storeHandler: StoreHandler,
   private def checkFileVersion(keyspace: String, executedFiles: List[FileDetails], file: FileDetails,
                                lastExecution: Double): Boolean = {
     if (lastExecution < file.version) {
-      fileHandler.readFile(file.fileName) match {
+      scanner.getScannerManager.getContent(file.fileName) match {
         case Success(content) =>
           println(file.fileName)
           val now = System.currentTimeMillis

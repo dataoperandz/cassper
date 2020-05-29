@@ -21,7 +21,7 @@ class DefaultCassperClient(session: Session) extends CassperClient {
   lazy val fileHandler = new DefaultFileHandler(scannerFactory)
   lazy val storeHandler = new DefaultStoreHandler(session)
   lazy val searchHandler = new DefaultSearchHandler(session)
-  lazy val cassaLogHandler = new CassperHandler(fileHandler, storeHandler, searchHandler)
+  lazy val cassaLogHandler = new CassperHandler(fileHandler, storeHandler, searchHandler, scannerFactory)
 
   override def migrate(keyspace: String): Unit = {
     cassaLogHandler.runScript(keyspace)

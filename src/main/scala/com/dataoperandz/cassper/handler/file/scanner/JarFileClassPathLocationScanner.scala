@@ -7,6 +7,7 @@ import java.util.jar.JarFile
 
 import akka.event.slf4j.SLF4JLogging
 import com.dataoperandz.cassper.exception.{CassperErrorCodeEnum, CassperException}
+import com.dataoperandz.cassper.util.Constants
 
 import scala.util.{Failure, Success, Try}
 
@@ -26,6 +27,16 @@ class JarFileClassPathLocationScanner extends ClassPathLocationScanner with SLF4
     val reader = new BufferedReader(new InputStreamReader(in))
     val content = Stream.continually(reader.readLine()).takeWhile(_ != null).mkString("\n")
     content.getBytes
+  }
+
+  override def getContent(file: String): Try[String] = {
+    Try {
+      val in = getClass.getResourceAsStream(Constants.SUFFIX + file)
+      val reader = new BufferedReader(new InputStreamReader(in))
+      val content = Stream.continually(reader.readLine()).takeWhile(_ != null).mkString("\n")
+      reader.close()
+      content
+    }
   }
 
   private def findResourceNamesFromJarFile(jarFile: JarFile, location: String): util.TreeSet[String] = {

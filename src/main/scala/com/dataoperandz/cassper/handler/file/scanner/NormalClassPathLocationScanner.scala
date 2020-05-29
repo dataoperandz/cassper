@@ -8,6 +8,7 @@ import java.util
 import com.dataoperandz.cassper.util.Constants
 
 import scala.collection.JavaConverters._
+import scala.util.Try
 
 class NormalClassPathLocationScanner extends ClassPathLocationScanner {
   override def findResourceNames(location: String, locationUrl: URL): util.TreeSet[String] = {
@@ -29,5 +30,16 @@ class NormalClassPathLocationScanner extends ClassPathLocationScanner {
     val cassalogDirectory = getClass.getClassLoader.getResource(Constants.CASSPER_DIR)
     val cassperPath = cassalogDirectory.getPath + Constants.SUFFIX + path
     Files readAllBytes (Paths get cassperPath)
+  }
+
+  override def getContent(file: String): Try[String] = {
+    Try {
+      val cassalogDirectory = getClass.getClassLoader.getResource(Constants.CASSPER_DIR)
+      val path = cassalogDirectory.getPath + "/"
+      val source = scala.io.Source.fromFile(new File(path + file), "iso-8859-1")
+      val content = source.mkString
+      source.close()
+      content
+    }
   }
 }
