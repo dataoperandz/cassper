@@ -15,7 +15,7 @@ developers := List(
 licenses += ("Apache-2.0", url("http://www.apache.org/licenses/LICENSE-2.0"))
 publishMavenStyle := true
 
-// disable publishw ith scala version, otherwise artifact name will include scala version 
+// disable publish with scala version, otherwise artifact name will include scala version 
 // e.g cassper_2.11
 crossPaths := false
 
