@@ -3,9 +3,6 @@ scalaVersion := "2.11.12"
 // library name
 name := "cassper"
 
-// library version
-version := "0.4"
-
 // project description
 description := "Schema migrations tool for `Apache Cassandra` that can be used with `JVM` applications."
 
