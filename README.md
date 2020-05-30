@@ -1,5 +1,7 @@
 # Cassper
 
+Schema migrations tool for Apache Cassandra that can be used with JVM applications
+
 ![cassper-original](https://user-images.githubusercontent.com/65799952/82756510-53b45980-9df8-11ea-9e9c-215639d6e0b1.png)
 
 ---
