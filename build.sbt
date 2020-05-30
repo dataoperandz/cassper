@@ -1,6 +1,6 @@
 scalaVersion := "2.11.12"
 
-// cassper 
+// cassper
 name := "cassper"
 description := "Schema migrations tool for `Apache Cassandra` that can be used with `JVM` applications."
 
