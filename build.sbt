@@ -34,6 +34,23 @@ publishTo := Some(
     Opts.resolver.sonatypeStaging
 )
 
+// realease with sbt-release plugin
+import ReleaseTransformations._
+releaseCrossBuild := true
+releaseProcess := Seq[ReleaseStep](
+  checkSnapshotDependencies,
+  inquireVersions,
+  runClean,
+  runTest,
+  setReleaseVersion,
+  commitReleaseVersion,
+  releaseStepCommandAndRemaining("+publishSigned"),
+  setNextVersion,
+  commitNextVersion,
+  releaseStepCommand("sonatypeReleaseAll"),
+  pushChanges
+)
+
 // other library dependencies
 libraryDependencies ++= {
   val cassandraVersion = "3.1.1"
