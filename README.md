@@ -8,7 +8,7 @@ Schema migrations tool for Apache Cassandra that can be used with JVM applicatio
 
 ## Cassper background
 
-`Cassper` is a schema migration tool for `Apache Cassandra`. It can be used as as Apache Cassandra schema change management tool and schema version controller in `JVM` based applications. Cassper has written with `Scala` and designed based on `Flayway` schema migration tool(Flyway mainly targetted for relational databases). `Cassper` schema migrations can be used for `DDL` changes(`CREATE/ALTER/DROP` statements of `tables`, `udts`, `keyspaces`) and Simple data changes(`CRUD` operations in `tables`).
+`Cassper` is a schema migration tool for `Apache Cassandra`. It can be used as as Apache Cassandra schema change management tool and schema version controller in `JVM` based applications. Cassper has written with `Scala` and designed based on [`Flayway`](https://flywaydb.org/) schema migration tool(Flyway mainly targetted for relational databases). `Cassper` schema migrations can be used for `DDL` changes(`CREATE/ALTER/DROP` statements of `tables`, `udts`, `keyspaces`) and Simple data changes(`CRUD` operations in `tables`).
 
 ---
 
