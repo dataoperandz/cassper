@@ -1,22 +1,18 @@
 # Cassper
 
-Schema migrations tool for `Apache Cassandra` that can be used with `JVM` applications.
-
 ![cassper-original](https://user-images.githubusercontent.com/65799952/82756510-53b45980-9df8-11ea-9e9c-215639d6e0b1.png)
 
 ---
 
-## Cassper background
+## About Cassper
 
-Versioned migrations have a version, a description and a checksum. The version must be unique. The description is purely informative for you to be able to remember what each migration does. The checksum is there to detect accidental changes. Versioned migrations are the most common type of migration. They are applied in order exactly once. Fortunately, there are tool for managing schema changes like `Liquibase`, `Flyway`, and `Active Record` for `Ruby on Rails` applications. These tools however, are designed specifically for relational databases.
-
-`Cassper` schema migration tool maily targetted for `Apache Cassandra`. It can be used as as Apache Cassandra schema change management tool(schema version controller). Cassper has written with `Scala` and designed based on `Flayway` schema migration tool. Cassper schema migrations scripts are most commonly written in `CQL`. This makes it easy to get started and leverage any existing scripts, tools and skills. It gives you access to the full set of capabilities of your Cassandra database and eliminates the need to understand any intermediate translation layer. `Cassper` schema migrations can be used for `DDL` changes(`CREATE/ALTER/DROP` statements of `tables`, `udts`, `keyspaces`) and Simple data changes(`CRUD` operations in `tables`).
+`Cassper` is a schema migration tool for `Apache Cassandra`. It can be used as as Apache Cassandra schema change management tool and schema version controller in `JVM` based applications. Cassper has written with `Scala` and designed based on `Flayway` schema migration tool(Flyway mainly targetted for relational databases). `Cassper` schema migrations can be used for `DDL` changes(`CREATE/ALTER/DROP` statements of `tables`, `udts`, `keyspaces`) and Simple data changes(`CRUD` operations in `tables`).
 
 ---
 
 ## Cassper migration scripts
 
-Cassper schema migration scripts need to put in the `src/main/resources/cassper` directory in your sbt project. The schema migration script needs to follow a specific format(the format is similar to `Flyway` migration script format). Following is the format of schema migration script `V_1_2__create_table_account.cql`.
+Cassper schema migrations scripts are written in `CQL`. This makes it easy to get started and leverage any existing scripts, tools and skills. It gives you access to the full set of capabilities of your Cassandra database and eliminates the need to understand any intermediate translation layer. Cassper schema migration scripts need to put in the `src/main/resources/cassper` directory in your sbt project. The schema migration script needs to follow a specific format(the format is similar to `Flyway` migration script format). Following is the format of schema migration script `V_1_2__create_table_account.cql`.
 
 ![cassper-schema-format](https://user-images.githubusercontent.com/2450752/83220095-1295af80-a140-11ea-82d2-05fc2f333cab.png)
 
