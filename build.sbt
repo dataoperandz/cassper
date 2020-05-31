@@ -32,7 +32,7 @@ publishTo := Some(
 // realease with sbt-release plugin
 import ReleaseTransformations._
 releaseCrossBuild := true
-//releaseTagName := s"version-${if (releaseUseGlobalVersion.value) (version in ThisBuild).value else version.value}"
+releaseTagName := s"version-${if (releaseUseGlobalVersion.value) (version in ThisBuild).value else version.value}"
 releaseProcess := Seq[ReleaseStep](
   checkSnapshotDependencies,
   inquireVersions,
@@ -40,6 +40,7 @@ releaseProcess := Seq[ReleaseStep](
   runTest,
   setReleaseVersion,
   commitReleaseVersion,
+  tagRelease,
   releaseStepCommandAndRemaining("+publishSigned"),
   setNextVersion,
   commitNextVersion,
