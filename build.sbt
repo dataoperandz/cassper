@@ -32,6 +32,7 @@ publishTo := Some(
 // realease with sbt-release plugin
 import ReleaseTransformations._
 releaseCrossBuild := true
+releaseTagName := s"v${version.value}-${name.value}",
 releaseProcess := Seq[ReleaseStep](
   checkSnapshotDependencies,
   inquireVersions,
