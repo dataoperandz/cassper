@@ -33,7 +33,6 @@ publishTo := Some(
 import ReleaseTransformations._
 releaseCrossBuild := true
 releaseTagName := s"version-${if (releaseUseGlobalVersion.value) (version in ThisBuild).value else version.value}"
-println(s"hoooo ------ $releaseTagName")
 releaseProcess := Seq[ReleaseStep](
   checkSnapshotDependencies,
   inquireVersions,
