@@ -63,9 +63,8 @@ ALTER TABLE rahasak.accounts ADD address TEXT;
 
 The latest dependency version of Cassper can be found in [maven central](https://search.maven.org/search?q=a:cassper). Following are the `Maven` and `Sbt` dependencies of Cassper.
 
-`Maven` dependency for `Java` applications
-
 ```
+<!-- Maven dependency for Java applications -->
 <dependency>
   <groupId>io.github.dataoperandz</groupId>
   <artifactId>cassper</artifactId>
@@ -73,9 +72,8 @@ The latest dependency version of Cassper can be found in [maven central](https:/
 </dependency>
 ```
 
-`Sbt` dependency for `Scala` applications
-
 ```
+// Sbt dependency for Scala applications
 libraryDependencies += "io.github.dataoperandz" % "cassper" % "0.4"
 ```
 
