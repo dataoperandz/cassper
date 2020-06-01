@@ -61,6 +61,8 @@ ALTER TABLE rahasak.accounts ADD address TEXT;
 
 ## Cassper dependency
 
+The latest dependency version of Cassper can be found in [maven central](https://search.maven.org/search?q=a:cassper). Following are the `Maven` and `Sbt` dependencies of Cassper.
+
 `Maven` dependency for `Java` applications
 
 ```
